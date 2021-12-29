@@ -20,7 +20,7 @@ public class Owale extends Awale {
     public int jouer(int cellule, Joueur joueur){
         assert (joueur.getTurn());
         assert (cellule > 0 && cellule < 13);
-        assert (joueur.isMyCamp(cellule));
+        //assert (joueur.isMyCamp(cellule));    desactivation a cause de la recusion dans cette variante
 
 
         if(!(grille[cellule -1] > 0))
@@ -32,6 +32,7 @@ public class Owale extends Awale {
         grille[cellule] = 0;
 
         int i;
+        int nb = 0; // pour savoir si gain de graine
         for (i = cellule + 1; temp > 0; ++i) {
             // ce if me permet de revenir à l'indice 0 de ma grille une fois arrivé à l'index 11 (bout de mon tableau)
             if (i % 12 == 0)
@@ -40,35 +41,39 @@ public class Owale extends Awale {
             if(i != cellule){
                 grille[i] += 1;
                 temp--;
+                // Difference avec classique : si ce n'est pas la derniere case ET que y'a 4 graines alors le joueur du terrain doit cash out !
+                if(temp > 0 && grille[i] == 4){
+                    System.out.println("debuggage : je passe dans ma boucle des joueurs");
+                    // je parcours mes joueurs pour tester lequel appartient le terrain
+                    for(int j = 0; j<joueurs.length;++j){
+                        if(joueurs[j].isMyCamp(i)){    // i+1 peut être ?
+                            joueurs[j].setScore(grille[i]);
+                            grille[i] = 0;
+                            nb++;
+                        }
+                    }
+                }
             }
 
         }
         // Semage terminé, je verifie donc ma case d'arrivé
         // i-- pour bien retomber sur mon index correspondant
         i--;
-        int nb = 0;
-        if (joueur.getCamp().equals("NORD")) {
+
+        // Difference avec Awale maintenant ! :
+        if (grille[i] == 4) {
             //System.out.println("i : et grille[i] debuggage : "+ i +"   :n  " + grille[i]);
-            if (i > 5)
-                return 2;
-            while(i > -1 && grille[i] < 4 && grille[i] > 1){
-                nb += grille[i];
-                joueur.setScore(grille[i]);
-                grille[i] = 0;
-                i--;
-            }
+            nb += grille[i];
+            joueur.setScore(grille[i]);
+            grille[i] = 0;
         }
-        // Si le joueur est SUD
-        else {
-            //System.out.println("i : et grille[i] debuggage : "+ i +"    :s "  + grille[i]);
-            if (i < 6)
-                return 2;
-            while(i > 5 && grille[i] < 4 && grille[i] > 1){
-                nb += grille[i];
-                joueur.setScore(grille[i]);
-                grille[i] = 0;
-                i--;
-            }
+        else if(grille[i] == 1){
+            //return 2;
+        }
+        // Sinon je continue de semer
+        else{
+            System.out.println("Trace : recursion jouer ");
+            jouer(i+1,joueur);
         }
         if(nb > 0)
             return 0;

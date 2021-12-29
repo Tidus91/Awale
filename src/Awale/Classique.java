@@ -51,24 +51,16 @@ public class Classique extends Awale {
         // i-- pour bien retomber sur mon index correspondant
         i--;
         int nb = 0;
-        //joueur.isMyCamp(i);
-        if (joueur.getCamp().equals("NORD")) {
+        if (joueur.isMyCamp(i+1)) {
             //System.out.println("i : et grille[i] debuggage : "+ i +"   :n  " + grille[i]);
-            if (i > 5)
-                return 2;
-            while(i > -1 && grille[i] < 4 && grille[i] > 1){
-                nb += grille[i];
-                joueur.setScore(grille[i]);
-                grille[i] = 0;
-                i--;
-            }
+            return 2;
         }
-        // Si le joueur est SUD
-        else {
-            //System.out.println("i : et grille[i] debuggage : "+ i +"    :s "  + grille[i]);
-            if (i < 6)
-                return 2;
-            while(i > 5 && grille[i] < 4 && grille[i] > 1){
+        else{
+            while(grille[i] < 4 && grille[i] > 1){
+                // protection
+                if(joueur.isMyCamp(i+1)){
+                    break;
+                }
                 nb += grille[i];
                 joueur.setScore(grille[i]);
                 grille[i] = 0;
