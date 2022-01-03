@@ -26,7 +26,9 @@ public class Owale extends Awale {
         if(!(grille[cellule -1] > 0))
             return -1;
 
+        //je décrémente cellule pour correspondre à mon index du tableau
         cellule--;
+        // temp est l'analogie de ma "main" avant de semer, je récupère les graines présente dans mon trou
         int temp = grille[cellule];
 
         grille[cellule] = 0;

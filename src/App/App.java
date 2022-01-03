@@ -23,131 +23,14 @@ public class App {
         }
         System.out.println("Vous avez donc choisi : " + choix);
 
+        /********************************** AWALE ****************************************/
+
         if(choix == 1){
-
-            System.out.println("Quelle est le nom du Joueur 1 ? (qui commencera en premier)");
-            String choixNom = new String();
-            choixNom = scanner.next();
-            int[] tab = new int[]{12, 11, 10, 9, 8, 7};
-            Joueur joueur1 = new Joueur(choixNom,tab);
-            joueur1.setTurn(true);
-            System.out.println("Quelle est le nom du Joueur 2 ?");
-            choixNom = scanner.next();
-            int[] tab2 = new int[]{1, 2, 3, 4, 5, 6};
-            Joueur joueur2 = new Joueur(choixNom,tab2);
-
-            System.out.println("prenom 1 : "+joueur1.getNom());
-            System.out.println("prenom 2 : "+joueur2.getNom());
 
             Classique Jeu = new Classique();
 
-            while(!Jeu.isOver){
-                if(joueur1.getTurn()){
-                    String plateau = Jeu.toString();
-                    System.out.println(plateau);
-                    System.out.println("\n");
-                    System.out.println("NORD : "+joueur1.getScore() + " Bille(s)");
-                    System.out.println("SUD : "+joueur2.getScore() + " Bille(s)");
-
-                    System.out.println("Ou voulez vous jouer ? " +joueur1.getNom());
-                    choix = scanner.nextInt();
-                    while((choix < 7 || choix > 12) && choix != 0){
-                        System.out.println("Erreur lors de la selection du coup, veuillez taper un nombre entre 7 et 12 // ou 0 pour abandonner");
-                        choix = scanner.nextInt();
-                    }
-                    if(choix == 0){
-                        if(joueur1.propositionAbandon(joueur2)){
-                            int grainesRestante = 0;
-                            for(int i=0;i<Jeu.grille.length;++i){
-                                grainesRestante += Jeu.grille[i];
-                            }
-                            joueur1.setScore(grainesRestante/2);
-                            joueur2.setScore(grainesRestante/2);
-                            break;
-                        }
-
-                    }
-
-
-                    // "temp" pas vraiment utile mais je l'utilise pour calculer le nombre de graines gagner lors du coup
-                    int temp = joueur1.getScore();
-
-                    int retourJouer = Jeu.jouer(choix,joueur1);
-
-                    while(retourJouer == -1){
-                        System.out.println("Vous ne pouvez pas jouer une case vide !");
-                        choix = scanner.nextInt();
-                        retourJouer = Jeu.jouer(choix,joueur1);
-                    }
-                    if(retourJouer == 0){
-                        System.out.println("\n ***************************************");
-                        System.out.println("Le joueur " + joueur1.getNom() + " a collecté " + (joueur1.getScore()-temp) + " graine(s)");
-                        System.out.println("***************************************");
-                    }
-
-                    joueur1.setTurn(false);
-                    joueur2.setTurn(true);
-                }
-                if(joueur2.getTurn()){
-                    String test = Jeu.toString();
-                    System.out.println(test);
-                    System.out.println("\n");
-                    System.out.println("NORD : "+joueur1.getScore() + " Bille(s)");
-                    System.out.println("SUD : "+joueur2.getScore() + " Bille(s)");
-
-                    System.out.println("Ou voulez vous jouer ? " +joueur2.getNom());
-                    choix = scanner.nextInt();
-                    while(choix < 0 || choix > 6  ){
-                        System.out.println("Erreur lors de la selection du coup, veuillez taper un nombre entre 1 et 6 // ou 0 pour abandonner");
-                        choix = scanner.nextInt();
-                    }
-                    if(choix == 0){
-                        if(joueur2.propositionAbandon(joueur1)){
-                            int grainesRestante = 0;
-                            for(int i=0;i<Jeu.grille.length;++i){
-                                grainesRestante += Jeu.grille[i];
-                            }
-                            joueur1.setScore(grainesRestante/2);
-                            joueur2.setScore(grainesRestante/2);
-                            break;
-                        }
-
-                    }
-
-                    // "temp" pas vraiment utile mais je l'utilise pour calculer le nombre de graines gagner lors du coup
-                    int temp = joueur2.getScore();
-                    int retourJouer = Jeu.jouer(choix,joueur2);
-
-                    while(retourJouer == -1){
-                        System.out.println("Vous ne pouvez pas jouer une case vide !");
-                        choix = scanner.nextInt();
-                        retourJouer = Jeu.jouer(choix,joueur2);
-                    }
-
-                    if(retourJouer == 0){
-                        System.out.println("\n ***************************************");
-                        System.out.println("Le joueur " + joueur2.getNom() + " a collecté " + (joueur2.getScore()-temp) + " graine(s)");
-                        System.out.println("***************************************");
-                    }
-
-                    joueur1.setTurn(true);
-                    joueur2.setTurn(false);
-                }
-            }
-            System.out.println("Le joueur " +joueur1.getNom() + " termine le jeu avec " + joueur1.getScore() + " graines !");
-            System.out.println("Le joueur " +joueur2.getNom() + " termine le jeu avec " + joueur2.getScore() + " graines !");
-            if(joueur1.getScore() > joueur2.getScore()){
-                System.out.println("\n" + joueur1.getNom() + " a gagné !!");
-            }
-            else if(joueur1.getScore() < joueur2.getScore())
-                System.out.println("\n" + joueur2.getNom() + " a gagné !!");
-            else
-                System.out.println("\n égalité entre les joueurs !");
+            Jeu.jouerUnePartie();
         }
-
-
-
-
 
         /*********************************************  OWALE     ***************************/
 
@@ -272,21 +155,9 @@ public class App {
                     System.out.println("Ou voulez vous jouer ? " +Jeu.joueurs[j].getNom());
                     choix = scanner.nextInt();
 
-                    while(!(Jeu.joueurs[j].isMyCamp(choix)) && choix != 0){
-                        System.out.println("Erreur lors de la selection du coup, veuillez taper une cellule vous appartenant // ou 0 pour abandonner");
+                    while(!(Jeu.joueurs[j].isMyCamp(choix))){
+                        System.out.println("Erreur lors de la selection du coup, veuillez taper une cellule vous appartenant");
                         choix = scanner.nextInt();
-                    }
-                    if(choix == 0){
-                        if(Jeu.joueurs[0].propositionAbandon(Jeu.joueurs[1])){
-                            int grainesRestante = 0;
-                            for(int i=0;i<Jeu.grille.length;++i){
-                                grainesRestante += Jeu.grille[i];
-                            }
-                            Jeu.joueurs[0].setScore(grainesRestante/2);
-                            Jeu.joueurs[0].setScore(grainesRestante/2);
-                            break;
-                        }
-
                     }
 
                     // "temp" pas vraiment utile mais je l'utilise pour calculer le nombre de graines gagner lors du coup
@@ -307,6 +178,7 @@ public class App {
                             System.out.println("Le joueur " + Jeu.joueurs[z].getNom() + " a collecté " + (Jeu.joueurs[z].getScore()-temp[z]) + " graine(s)");
                         System.out.println("***************************************");
                     }
+
 
                     Jeu.joueurs[j].setTurn(false);
                     if(j == Jeu.joueurs.length-1)

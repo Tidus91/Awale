@@ -17,4 +17,5 @@ public abstract class Awale {
     }
 
     public abstract void jouerUnCoup(int cellule,Joueur j);
+    // recopier içi ce qui est en commun avec classique et owale, puis mettre dans une fonction les differences
 }
