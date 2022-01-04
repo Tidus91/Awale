@@ -1,37 +1,32 @@
-package Awale;
+package Variante;
 
+import Awale.Awale;
 import Joueur.Joueur;
 
 public class Owale extends Awale {
 
-    private int nbGraine;
-    private int nbJoueurs;
-    public Joueur [] joueurs;
-
     public Owale(int nb){
-        super(12);
-        nbGraine = 48;
-        for(int i=0;i<grille.length;++i)
-            grille[i] = nbGraine / grille.length;
-        nbJoueurs = nb;
-        joueurs = new Joueur [nb];
+        super(12,48,nb);
+        for(int i=0;i<getLongueurGrille();++i)
+            setCaseGrille(i,getNbGraine() / getLongueurGrille());
     }
 
-    public int jouer(int cellule, Joueur joueur){
+    @Override
+    public int jouerUnCoup(int cellule, Joueur joueur){
         assert (joueur.getTurn());
         assert (cellule > 0 && cellule < 13);
         //assert (joueur.isMyCamp(cellule));    desactivation a cause de la recusion dans cette variante
 
 
-        if(!(grille[cellule -1] > 0))
+        if(!(getCaseGrille(cellule-1) > 0))
             return -1;
 
         //je décrémente cellule pour correspondre à mon index du tableau
         cellule--;
         // temp est l'analogie de ma "main" avant de semer, je récupère les graines présente dans mon trou
-        int temp = grille[cellule];
+        int temp = getCaseGrille(cellule);
 
-        grille[cellule] = 0;
+        setCaseGrille(cellule,0);
 
         int i;
         int nb = 0; // pour savoir si gain de graine
@@ -41,16 +36,16 @@ public class Owale extends Awale {
                 i = 0;
             // ce if me permet de "sauter" ma case si j'avais plus de 12 graines et que je dois faire un tour complet
             if(i != cellule){
-                grille[i] += 1;
+                setCaseGrilleAjout(i);
                 temp--;
                 // Difference avec classique : si ce n'est pas la derniere case ET que y'a 4 graines alors le joueur du terrain doit cash out !
-                if(temp > 0 && grille[i] == 4){
+                if(temp > 0 && getCaseGrille(i) == 4){
                     System.out.println("debuggage : je passe dans ma boucle des joueurs");
                     // je parcours mes joueurs pour tester lequel appartient le terrain
-                    for(int j = 0; j<joueurs.length;++j){
-                        if(joueurs[j].isMyCamp(i)){    // i+1 peut être ?
-                            joueurs[j].setScore(grille[i]);
-                            grille[i] = 0;
+                    for(int j = 0; j<getNbJoueur();++j){
+                        if(getJoueur(j).isMyCamp(i)){    // i+1 peut être ?
+                            getJoueur(j).setScore(getCaseGrille(i));
+                            setCaseGrille(i,0);
                             nb++;
                         }
                     }
@@ -63,19 +58,19 @@ public class Owale extends Awale {
         i--;
 
         // Difference avec Awale maintenant ! :
-        if (grille[i] == 4) {
+        if (getCaseGrille(i) == 4) {
             //System.out.println("i : et grille[i] debuggage : "+ i +"   :n  " + grille[i]);
-            nb += grille[i];
-            joueur.setScore(grille[i]);
-            grille[i] = 0;
+            nb += getCaseGrille(i);
+            joueur.setScore(getCaseGrille(i));
+            setCaseGrille(i,0);
         }
-        else if(grille[i] == 1){
+        else if(getCaseGrille(i) == 1){
             //return 2;
         }
         // Sinon je continue de semer
         else{
             System.out.println("Trace : recursion jouer ");
-            jouer(i+1,joueur);
+            jouerUnCoup(i+1,joueur);
         }
         if(nb > 0)
             return 0;
@@ -83,81 +78,82 @@ public class Owale extends Awale {
 
     }
 
+    @Override
     public String toString(){
         String chaine = new String();
-        if(nbJoueurs == 2){
-            chaine += "                     A            \n";
+        if(getNbJoueur() == 2){
+            chaine += "                     J1            \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
             for(int i=11;i>5;--i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "      ";
             for(int i=0;i<6;++i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n                     B             ";
+            chaine += "\n                     J2             ";
             return chaine;
 
         }
-        else if(nbJoueurs == 3){
-            chaine += "                     A            \n";
+        else if(getNbJoueur() == 3){
+            chaine += "                     J1            \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
             for(int i=11;i>5;--i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
-            chaine += "    C \n";
+            chaine += "    J3 \n";
             chaine += "      ";
             for(int i=0;i<6;++i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n                     B             ";
+            chaine += "\n                     J2             ";
             return chaine;
 
         }
-        else if(nbJoueurs == 4){
-            chaine += "              A               B \n";
+        else if(getNbJoueur() == 4){
+            chaine += "              J1               J4 \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
             for(int i=11;i>5;--i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "      ";
             for(int i=0;i<6;++i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n               C             D    ";
+            chaine += "\n               J2             J3    ";
             return chaine;
 
         }
-        else if(nbJoueurs == 6){
-            chaine += "           A          B         C \n";
+        else if(getNbJoueur() == 6){
+            chaine += "           J1          J6         J5 \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
             for(int i=11;i>5;--i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "      ";
             for(int i=0;i<6;++i){
-                chaine += " [ "+grille[i] +"]";
+                chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n          D         E         F  ";
+            chaine += "\n          J2         J3         J4  ";
             return chaine;
 
         }
@@ -165,11 +161,8 @@ public class Owale extends Awale {
     }
 
     @Override
-    public void jouerUnCoup(int cellule, Joueur j) {
+    public void jouerUnePartie() {
 
     }
 
-    public int getNbJoueurs() {
-        return nbJoueurs;
-    }
 }
