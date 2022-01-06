@@ -40,7 +40,7 @@ public class Owale extends Awale {
                 temp--;
                 // Difference avec classique : si ce n'est pas la derniere case ET que y'a 4 graines alors le joueur du terrain doit cash out !
                 if(temp > 0 && getCaseGrille(i) == 4){
-                    System.out.println("debuggage : je passe dans ma boucle des joueurs");
+                    System.out.println("Trace : je passe dans ma boucle des joueurs");
                     // je parcours mes joueurs pour tester lequel appartient le terrain
                     for(int j = 0; j<getNbJoueur();++j){
                         if(getJoueur(j).isMyCamp(i)){    // i+1 peut être ?
@@ -82,7 +82,7 @@ public class Owale extends Awale {
     public String toString(){
         String chaine = new String();
         if(getNbJoueur() == 2){
-            chaine += "                     J1            \n";
+            chaine += "                     J2            \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
@@ -96,31 +96,31 @@ public class Owale extends Awale {
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n                     J2             ";
+            chaine += "\n                     J1             ";
             return chaine;
 
         }
         else if(getNbJoueur() == 3){
-            chaine += "                     J1            \n";
+            chaine += "                     J3            \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
             for(int i=11;i>5;--i){
                 chaine += " [ "+getCaseGrille(i) +"]";
             }
-            chaine += "    J3 \n";
+            chaine += "    J2 \n";
             chaine += "      ";
             for(int i=0;i<6;++i){
                 chaine += " [ "+getCaseGrille(i) +"]";
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n                     J2             ";
+            chaine += "\n                     J1             ";
             return chaine;
 
         }
         else if(getNbJoueur() == 4){
-            chaine += "              J1               J4 \n";
+            chaine += "              J4               J3 \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
@@ -134,12 +134,12 @@ public class Owale extends Awale {
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n               J2             J3    ";
+            chaine += "\n               J1             J2    ";
             return chaine;
 
         }
         else if(getNbJoueur() == 6){
-            chaine += "           J1          J6         J5 \n";
+            chaine += "           J6          J5         J4 \n";
             chaine += "        12   11   10    9    8    7";
             chaine += "\n";
             chaine += "      ";
@@ -153,7 +153,7 @@ public class Owale extends Awale {
             }
             chaine += "\n";
             chaine += "         1    2    3    4    5    6";
-            chaine += "\n          J2         J3         J4  ";
+            chaine += "\n          J1         J2         J3  ";
             return chaine;
 
         }
@@ -161,8 +161,8 @@ public class Owale extends Awale {
     }
 
     @Override
-    public void jouerUnePartie() {
-
+    public int jouerUnePartie() {
+        return 3;
     }
 
 }

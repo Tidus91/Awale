@@ -47,117 +47,7 @@ public class App {
 
             String choixNom = new String();
 
-            // je pourrais avoir créer une methode qui me permet de factoriser ce code ci-dessous d'ajout de joueurs
-
-            if(choix == 2){
-                System.out.println("Quel est le nom du joueur 1 ?");
-                choixNom = scanner.next();
-                int[] tab = new int[]{12, 11, 10, 9, 8, 7};
-                Joueur joueur1 = new Joueur(choixNom,tab);
-                //Jeu.joueurs[0] = joueur1;
-                Jeu.ajouterJoueur(0,joueur1);
-                joueur1.setTurn(true);
-                System.out.println("Quel est le nom du joueur 2 ?");
-                choixNom = scanner.next();
-                int[] tab2 = new int[]{1, 2, 3, 4, 5, 6};
-                Joueur joueur2 = new Joueur(choixNom,tab2);
-                //Jeu.joueurs[1] = joueur2;
-                Jeu.ajouterJoueur(1,joueur2);
-
-                System.out.println("prenom 1 : "+joueur1.getNom());
-                System.out.println("prenom 2 : "+joueur2.getNom());
-
-            }
-            else if(choix == 3){
-                System.out.println("Quel est le nom du joueur 1 ?");
-                choixNom = scanner.next();
-                int[] tab = new int[]{12, 11, 10, 9};
-                Joueur joueur1 = new Joueur(choixNom,tab);
-                //Jeu.joueurs[0] = joueur1;
-                Jeu.ajouterJoueur(0,joueur1);
-                joueur1.setTurn(true);
-                System.out.println("Quel est le nom du joueur 2 ?");
-                choixNom = scanner.next();
-                int[] tab2 = new int[]{1, 2, 3, 4};
-                Joueur joueur2 = new Joueur(choixNom,tab2);
-                //Jeu.joueurs[1] = joueur2;
-                Jeu.ajouterJoueur(1,joueur2);
-                System.out.println("Quel est le nom du joueur 3 ?");
-                choixNom = scanner.next();
-                int[] tab3 = new int[]{5, 6, 7, 8};
-                Joueur joueur3 = new Joueur(choixNom,tab3);
-                //Jeu.joueurs[2] = joueur3;
-                Jeu.ajouterJoueur(2,joueur3);
-
-            }
-            else if(choix == 4){
-                System.out.println("Quel est le nom du joueur 1 ?");
-                choixNom = scanner.next();
-                int[] tab = new int[]{12, 11, 10};
-                Joueur joueur1 = new Joueur(choixNom,tab);
-                //Jeu.joueurs[0] = joueur1;
-                Jeu.ajouterJoueur(0,joueur1);
-                joueur1.setTurn(true);
-                System.out.println("Quel est le nom du joueur 2 ?");
-                choixNom = scanner.next();
-                int[] tab2 = new int[]{1, 2, 3};
-                Joueur joueur2 = new Joueur(choixNom,tab2);
-                //Jeu.joueurs[1] = joueur2;
-                Jeu.ajouterJoueur(1,joueur2);
-                System.out.println("Quel est le nom du joueur 3 ?");
-                choixNom = scanner.next();
-                int[] tab3 = new int[]{4, 5, 6};
-                Joueur joueur3 = new Joueur(choixNom,tab3);
-                //Jeu.joueurs[2] = joueur3;
-                Jeu.ajouterJoueur(2,joueur3);
-                System.out.println("Quel est le nom du joueur 4 ?");
-                choixNom = scanner.next();
-                int[] tab4 = new int[]{7, 8, 9};
-                Joueur joueur4 = new Joueur(choixNom,tab4);
-                //Jeu.joueurs[3] = joueur4;
-                Jeu.ajouterJoueur(3,joueur4);
-
-            }
-            else if(choix == 6){
-                System.out.println("Quel est le nom du joueur 1 ?");
-                choixNom = scanner.next();
-                int[] tab = new int[]{12, 11};
-                Joueur joueur1 = new Joueur(choixNom,tab);
-                //Jeu.joueurs[0] = joueur1;
-                Jeu.ajouterJoueur(0,joueur1);
-                joueur1.setTurn(true);
-                System.out.println("Quel est le nom du joueur 2 ?");
-                choixNom = scanner.next();
-                int[] tab2 = new int[]{1, 2,};
-                Joueur joueur2 = new Joueur(choixNom,tab2);
-                //Jeu.joueurs[1] = joueur2;
-                Jeu.ajouterJoueur(1,joueur2);
-                System.out.println("Quel est le nom du joueur 3 ?");
-                choixNom = scanner.next();
-                int[] tab3 = new int[]{3, 4};
-                Joueur joueur3 = new Joueur(choixNom,tab3);
-                //Jeu.joueurs[2] = joueur3;
-                Jeu.ajouterJoueur(2,joueur3);
-                System.out.println("Quel est le nom du joueur 4 ?");
-                choixNom = scanner.next();
-                int[] tab4 = new int[]{5, 6};
-                Joueur joueur4 = new Joueur(choixNom,tab4);
-                //Jeu.joueurs[3] = joueur4;
-                Jeu.ajouterJoueur(3,joueur4);
-                System.out.println("Quel est le nom du joueur 5 ?");
-                choixNom = scanner.next();
-                int[] tab5 = new int[]{7,8};
-                Joueur joueur5 = new Joueur(choixNom,tab5);
-                //Jeu.joueurs[4] = joueur5;
-                Jeu.ajouterJoueur(4,joueur5);
-                System.out.println("Quel est le nom du joueur 6 ?");
-                choixNom = scanner.next();
-                int[] tab6 = new int[]{9, 10};
-                Joueur joueur6 = new Joueur(choixNom,tab6);
-                //Jeu.joueurs[5] = joueur6;
-                Jeu.ajouterJoueur(5,joueur6);
-
-            }
+            Jeu.initJoueur(choix);
 
             int j =0; // indice de mes joueurs
             while(!Jeu.getIsOver()){
@@ -192,7 +82,8 @@ public class App {
                     if(retourJouer == 0){
                         System.out.println("\n ***************************************");
                         for(int z =0;z<Jeu.getNbJoueur();z++)
-                            System.out.println("Le joueur " + Jeu.getJoueur(z).getNom() + " a collecté " + (Jeu.getJoueur(z).getScore()-temp[z]) + " graine(s)");
+                            if(Jeu.getJoueur(z).getScore() != temp[z])
+                                System.out.println("Le joueur " + Jeu.getJoueur(z).getNom() + " a collecté " + (Jeu.getJoueur(z).getScore()-temp[z]) + " graine(s)");
                         System.out.println("***************************************");
                     }
 

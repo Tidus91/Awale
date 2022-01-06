@@ -29,22 +29,51 @@ public abstract class Awale implements IAwale{
         return grille.length;
     }
 
-    public void ajouterJoueur(int indice,Joueur j){
+    private void ajouterJoueur(int indice,Joueur j){
         joueurs[indice] = j;
     }
     public Joueur getJoueur(int indice){
         return joueurs[indice];
     }
+    public Joueur [] getAllJoueurs(){
+        return this.joueurs;
+    }
     public int getNbJoueur(){
         return joueurs.length;
+    }
+
+    public void initJoueur(int nbJ){
+        int nb = 0;
+
+        Scanner scanner = new Scanner(System.in);
+        String choixNom = new String();
+        int [] tab = new int [grille.length/nbJ];
+
+        while(nb < nbJ){
+            for(int i =0; i < tab.length;++i){
+                tab[i] = nb * tab.length + (i+1);
+            }
+            System.out.println("Le joueur1 commencera toujours en premier");
+            System.out.println("Quel est le nom du Joueur " + (nb+1) );
+
+            choixNom = scanner.next();
+
+            Joueur joueurf = new Joueur(choixNom,tab);
+            if(nb == 0)
+                joueurf.setTurn(true);
+            ajouterJoueur(nb,joueurf);
+            nb++;
+        }
     }
 
     public abstract int jouerUnCoup(int cellule,Joueur j);
     // en vérité je pourrais faire une méthode jouerUnCoup non abstract qui contiendrais des fonctions abstract étant donné
     // que certain passages sont similaire entre cette methode classique et celle de l'owalé
 
+
     public String toString(){
         String chaine = new String();
+        chaine += "                     J2            \n";
         chaine += "NORD    12   11   10    9    8    7";
         chaine += "\n";
         chaine += "      ";
@@ -58,6 +87,7 @@ public abstract class Awale implements IAwale{
         }
         chaine += "\n";
         chaine += "SUD      1    2    3    4    5    6";
+        chaine += "\n                     J1             ";
         return chaine;
     }
 

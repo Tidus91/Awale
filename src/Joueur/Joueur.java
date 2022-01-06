@@ -45,14 +45,15 @@ public class Joueur {
         return false;
     }
 
-    public boolean propositionAbandon(Joueur joueurAdverse){
+    public boolean propositionAbandon(Joueur [] joueursAdverse){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Proposition d'abandon, êtes vous d'accord pour abandonner " + joueurAdverse.getNom() + " ? \t tapez 0 pour abandonner ");
-        int choix = scanner.nextInt();
-        if(choix == 0)
-            return true;
-        return false;
-
+        for(int j=0;j< joueursAdverse.length;++j){
+            System.out.println("Proposition d'abandon, êtes vous d'accord pour abandonner " + joueursAdverse[j].getNom() + " ? \t tapez 0 pour abandonner ");
+            int choix = scanner.nextInt();
+            if(choix != 0)
+                return false;
+        }
+        return true;
     }
 
     public String toString(){
