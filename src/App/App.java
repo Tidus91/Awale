@@ -45,59 +45,8 @@ public class App {
 
             Owale Jeu = new Owale(choix);
 
-            String choixNom = new String();
-
-            Jeu.initJoueur(choix);
-
-            int j =0; // indice de mes joueurs
-            while(!Jeu.getIsOver()){
-                if(Jeu.getJoueur(j).getTurn()){
-                    String plateau = Jeu.toString();
-                    System.out.println(plateau);
-                    System.out.println("\n");
-
-                    for(int i = 0;i<Jeu.getNbJoueur();++i)
-                        System.out.println(Jeu.getJoueur(i).toString());
-
-                    System.out.println("Ou voulez vous jouer ? " +Jeu.getJoueur(j).getNom());
-                    choix = scanner.nextInt();
-
-                    while(!(Jeu.getJoueur(j).isMyCamp(choix))){
-                        System.out.println("Erreur lors de la selection du coup, veuillez taper une cellule vous appartenant");
-                        choix = scanner.nextInt();
-                    }
-
-                    // "temp" pas vraiment utile mais je l'utilise pour calculer le nombre de graines gagner lors du coup
-                    int [] temp = new int[Jeu.getNbJoueur()];
-                    for(int z=0;z<Jeu.getNbJoueur();++z)
-                        temp[z] = Jeu.getJoueur(j).getScore();
-
-                    int retourJouer = Jeu.jouerUnCoup(choix,Jeu.getJoueur(j));
-
-                    while(retourJouer == -1){
-                        System.out.println("Vous ne pouvez pas jouer une case vide !");
-                        choix = scanner.nextInt();
-                        retourJouer = Jeu.jouerUnCoup(choix,Jeu.getJoueur(j));
-                    }
-                    if(retourJouer == 0){
-                        System.out.println("\n ***************************************");
-                        for(int z =0;z<Jeu.getNbJoueur();z++)
-                            if(Jeu.getJoueur(z).getScore() != temp[z])
-                                System.out.println("Le joueur " + Jeu.getJoueur(z).getNom() + " a collecté " + (Jeu.getJoueur(z).getScore()-temp[z]) + " graine(s)");
-                        System.out.println("***************************************");
-                    }
-
-
-                    Jeu.getJoueur(j).setTurn(false);
-                    if(j == Jeu.getNbJoueur()-1)
-                        j = 0;
-                    else
-                        j += 1;
-                    Jeu.getJoueur(j).setTurn(true);
-                }
-            }
-
+            Jeu.jouerUnePartie();
         }
-
     }
+
 }

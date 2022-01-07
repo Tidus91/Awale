@@ -160,9 +160,4 @@ public class Owale extends Awale {
         return "bug";
     }
 
-    @Override
-    public int jouerUnePartie() {
-        return 3;
-    }
-
 }
